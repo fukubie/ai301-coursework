@@ -1,0 +1,16 @@
+# Rubric: is this pull request ready to submit?
+
+## Checks
+
+| Check | Evidence | Pass condition | Weight |
+|---|---|---|---|
+| `plan_fidelity` | The diff's changed files and logic (`git diff main...HEAD` or bundle diff) read side-by-side against the approved plan (`plan.md` plus `## Deviations`, or bundle plan) and the PR description's `Changes` and `Notes for Reviewers` sections. | Every modified file and behavioral change in the diff falls inside the plan's stated scope boundary OR is an honestly disclosed deviation/shortfall explained in the plan's deviation notes and the PR description; the diff contains no silent scope creep, no undisclosed missing plan steps, no unrelated opportunistic refactors, and the PR description accurately matches what the diff actually changes. | required |
+| `test_evidence` | The claimed test and reproduction output (`test_evidence.md` or bundle test evidence) read against the plan's test plan, the issue's reproduction steps, and the repository's stated check requirements. | Concrete, observable verification output is present showing the fix in action (such as before/after reproduction command runs with raw output or concrete test runner counts/results per the plan) AND whatever checks the repository asks for are executed and reported honestly; bare unbacked assertions (e.g. merely claiming "tests pass" or "works now" with no command output or reproduction trace) fail. | required |
+| `diff_hygiene` | All hunks and added/modified lines in the branch diff (`git diff main...HEAD` or bundle diff) and committed file paths. | The diff is clean, minimal, and reviewable: it contains no leftover debugging artifacts (`print()`, `console.log`, `breakpoint()`, `pdb`), no commented-out dead code blocks, no unrelated formatting/whitespace churn across untouched code, and no committed temporary or local workflow artifacts (`plan.md`, `pr_draft.md`, `test_evidence.md`, `comment.md`, `.env`, or editor swap files). | required |
+| `standards_compliance` | The PR title, branch name (when provided), and PR description (`pr_draft.md` or bundle PR description) read against the repository's PR template (`.github/PULL_REQUEST_TEMPLATE.md`) and contribution guidelines/policy stated in the repo facts. | Every required section of the repository's PR template is present and substantively completed (Summary, Issue link with `Closes #<id>` or equivalent target issue reference, Changes, Testing with accurate checkbox states, Screenshots/Demo or explicit `N/A` with reason), AND all required repository policies—specifically the explicit AI-use disclosure in `Notes for Reviewers` when required by the repository or course policy—are addressed directly without leaving template placeholders. | required |
+
+## Verdict rule
+
+- **accept**: Every `required` check has a grade of `pass`. (`preferred` checks, if any exist, are recorded in the output but never change the verdict.)
+- **reject**: One or more `required` checks has a grade of `fail` or `unclear`.
+- **Treatment of `unclear`**: Any `unclear` grade on a `required` check counts as `fail` and forces a `reject` verdict. If evidence needed to verify a required check is missing, truncated, or ambiguous, grade that check `fail` or `unclear` and reject the package.
